@@ -58,9 +58,9 @@ function Hero() {
       </div>
 
       <p className="tag">
-        <strong>Full-stack engineer</strong> building real-time trading engines, CRDT-based
-        collaborative editors, and AI-native tooling. Equally at home in a Spring Boot service,
-        an Erlang game loop, or a sub-second voice pipeline.
+        <strong>Full-stack engineer</strong> building RL environments for coding agents, LLM
+        evaluation platforms, and real-time systems. Equally at home in a Spring Boot service,
+        a CRDT sync engine, or a sub-second voice pipeline.
       </p>
 
       <div className="cta">
@@ -270,23 +270,23 @@ function Readme() {
         <span className="meta">~/portfolio/README.md</span>
       </div>
       <CodeBlock lines={[
-        [{ c: 'com', t: '// Engineer, building things that run in real-time.' }],
+        [{ c: 'com', t: '// Engineer, building the systems agents get trained and tested on.' }],
         [],
         [{ c: 'kw', t: 'export const' }, { c: '', t: ' ' }, { c: 'var', t: 'dhruv' }, { c: '', t: ' = {' }],
         [{ c: '', t: '  ' }, { c: 'prop', t: 'role' }, { c: '', t: ': ' }, { c: 'str', t: '"Full-Stack Engineer"' }, { c: '', t: ',' }],
         [{ c: '', t: '  ' }, { c: 'prop', t: 'years' }, { c: '', t: ': ' }, { c: 'num', t: '2' }, { c: '', t: ',' }],
-        [{ c: '', t: '  ' }, { c: 'prop', t: 'focus' }, { c: '', t: ': [' }, { c: 'str', t: '"real-time"' }, { c: '', t: ', ' }, { c: 'str', t: '"CRDT"' }, { c: '', t: ', ' }, { c: 'str', t: '"LLMs"' }, { c: '', t: ', ' }, { c: 'str', t: '"trading"' }, { c: '', t: '],' }],
-        [{ c: '', t: '  ' }, { c: 'prop', t: 'currentlyAt' }, { c: '', t: ': ' }, { c: 'str', t: '"Kreeda Labs"' }, { c: '', t: ',' }],
+        [{ c: '', t: '  ' }, { c: 'prop', t: 'focus' }, { c: '', t: ': [' }, { c: 'str', t: '"RL envs"' }, { c: '', t: ', ' }, { c: 'str', t: '"LLM evals"' }, { c: '', t: ', ' }, { c: 'str', t: '"real-time"' }, { c: '', t: ', ' }, { c: 'str', t: '"CRDT"' }, { c: '', t: '],' }],
+        [{ c: '', t: '  ' }, { c: 'prop', t: 'currentlyAt' }, { c: '', t: ': ' }, { c: 'str', t: '"Biz-Tech Analytics"' }, { c: '', t: ',' }],
         [{ c: '', t: '  ' }, { c: 'prop', t: 'shippedRecently' }, { c: '', t: ': ' }, { c: 'fn', t: 'async' }, { c: '', t: ' () => (' }],
         [{ c: '', t: '    ' }, { c: 'kw', t: 'await' }, { c: '', t: ' ' }, { c: 'fn', t: 'Promise' }, { c: '', t: '.' }, { c: 'fn', t: 'all' }, { c: '', t: '([' }],
-        [{ c: '', t: '      ' }, { c: 'str', t: '"multi-leg trading engine (100+ orders)"' }, { c: '', t: ',' }],
-        [{ c: '', t: '      ' }, { c: 'str', t: '"Y.js collaborative editor MVP"' }, { c: '', t: ',' }],
-        [{ c: '', t: '      ' }, { c: 'str', t: '"voice-based AI interviewer"' }, { c: '', t: ',' }],
+        [{ c: '', t: '      ' }, { c: 'str', t: '"RL environment for coding agents"' }, { c: '', t: ',' }],
+        [{ c: '', t: '      ' }, { c: 'str', t: '"benchmark evaluation platform"' }, { c: '', t: ',' }],
+        [{ c: '', t: '      ' }, { c: 'str', t: '"ATS for a 1,000+ freelancer pool"' }, { c: '', t: ',' }],
         [{ c: '', t: '    ])' }],
         [{ c: '', t: '  ),' }],
         [{ c: '', t: '};' }],
         [],
-        [{ c: 'com', t: '// Open to interesting full-stack & real-time work.' }],
+        [{ c: 'com', t: '// Open to interesting AI, evals & real-time work.' }],
         [{ c: 'com', t: '// Reach out: dhruvgupta9191@gmail.com' }],
       ]} highlights={[11, 12, 13]} />
     </div>
@@ -424,7 +424,39 @@ function ProjectVisual({ kind, seed }) {
   if (kind === 'voice') return <VoiceWaveVisual />;
   if (kind === 'candles') return <CandlesVisual seed={seed} />;
   if (kind === 'grid') return <CRDTGridVisual />;
+  if (kind === 'verifier') return <PipelineVisual stages={['compile', 'hidden tests', 'time / mem limits', 'reward']} />;
+  if (kind === 'bench') return <PipelineVisual stages={['task', 'sandbox run', 'verify', 'score']} />;
+  if (kind === 'funnel') return <PipelineVisual stages={['intake', 'resume scoring', 'screening', 'interview scheduled']} />;
   return null;
+}
+
+// Animated stage pipeline: a "run" advances through each stage in turn.
+function PipelineVisual({ stages }) {
+  const [step, setStep] = useStateS(0);
+  useEffectS(() => {
+    const t = setInterval(() => setStep((s) => (s + 1) % (stages.length + 2)), 800);
+    return () => clearInterval(t);
+  }, [stages.length]);
+  return (
+    <div style={{ width: '100%', padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 10, fontFamily: 'var(--mono, monospace)', fontSize: 13 }}>
+      {stages.map((s, i) => {
+        const done = step > i;
+        const active = step === i;
+        return (
+          <div key={s} style={{
+            display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px',
+            border: '1px solid var(--line)', borderRadius: 8,
+            color: done ? 'var(--green)' : active ? 'var(--accent-2)' : 'var(--text-mute)',
+            transition: 'color .3s, border-color .3s',
+            borderColor: done ? 'var(--green)' : active ? 'var(--accent-2)' : 'var(--line)',
+          }}>
+            <span style={{ width: 16 }}>{done ? '\u2713' : active ? '\u25B6' : '\u25CB'}</span>
+            <span>{s}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 function VoiceWaveVisual() {
@@ -711,7 +743,7 @@ function About() {
           <div className="sub2">Core Java · OOP · Functional · Multithreading</div>
           <p>
             Validated the substrate for Spring Boot services and trading logic shipped at
-            Kreeda and LTIMindtree.
+            Kreeda Labs and LTIMindtree.
           </p>
         </div>
       </div>

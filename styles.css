@@ -731,6 +731,7 @@ code, pre, .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
   font-weight: 600;
   color: #fff;
 }
+.exp-head .logo.biz { background: linear-gradient(135deg, oklch(0.62 0.2 190), oklch(0.6 0.2 250)); }
 .exp-head .logo.krda { background: linear-gradient(135deg, oklch(0.6 0.2 275), oklch(0.6 0.2 220)); }
 .exp-head .logo.ltim { background: linear-gradient(135deg, oklch(0.6 0.2 150), oklch(0.6 0.2 200)); }
 .exp-head .logo.octr { background: linear-gradient(135deg, oklch(0.6 0.2 30), oklch(0.6 0.2 340)); }
